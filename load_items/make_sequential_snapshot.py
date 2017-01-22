@@ -1,9 +1,7 @@
 import os
+import sys
 from paraview.simple import *
 
-home_path = '/home/nebula/work/paraview'
-state_file_path = os.path.join(home_path, 'sb_simulation20170120.pvsm')
-animation_dir_path = os.path.join('Movies', 'test_pvbatch_ospray20170121')
 
 def set_ospray(renderview):
     renderview.Shadows = 1
@@ -13,23 +11,30 @@ def set_ospray(renderview):
     renderview.EnableOSPRay = 1
 
 
-servermanager.LoadState(state_file_path)
-# paraview.simple._DisableFirstRenderCameraReset()
+def make_animation(start=0, steps=10):
+    home_path = '/home/nebula/work/paraview'
+    state_file_path = os.path.join(home_path, 'sb_simulation_rot_20170122.pvsm')
+    animation_dir_path = os.path.join('Movies', 'test_pvbatch_ospray_rot_4k_20170122')
 
-SetActiveView(GetRenderView())
-renderView1 = GetActiveViewOrCreate('RenderView')
-renderView1.ViewSize = [1920, 1080]
-set_ospray(renderView1)
-Render()
+    servermanager.LoadState(state_file_path)
+    # paraview.simple._DisableFirstRenderCameraReset()
 
-animationScene1 = GetAnimationScene()
+    SetActiveView(GetRenderView())
+    renderView1 = GetActiveViewOrCreate('RenderView')
+    renderView1.ViewSize = [4000, 4000]
+    set_ospray(renderView1)
+    Render()
 
-screenshot_file_path = os.path.join(home_path, animation_dir_path, 'frame.%04d.png')
-for i in range(19, 200):
-    animationScene1.StartTime = i
-    renderView1.ViewTime = i
-    # Render()
-    SaveScreenshot(screenshot_file_path % i, magnification=1, quality=100)
+    animationScene1 = GetAnimationScene()
+
+    screenshot_file_path = os.path.join(home_path, animation_dir_path, 'frame.%04d.png')
+    for i in range(start, start + steps):
+        print('Processing: ' + (screenshot_file_path % i))
+        # animationScene1.StartTime = i
+        animationScene1.AnimationTime = i
+        # renderView1.ViewTime = i
+        # Render()
+        SaveScreenshot(screenshot_file_path % i, magnification=1, quality=100)
 
 
 '''
@@ -44,3 +49,13 @@ view.StereoType = "Right"
 view.UseOffscreenRendering = 1
 WriteAnimation("animationC_R.png")
 '''
+
+
+if __name__ == '__main__':
+    start_time = 0
+    if len(sys.argv) == 2:
+        start_time = int(sys.argv[1])
+
+    make_animation(start=start_time)
+
+

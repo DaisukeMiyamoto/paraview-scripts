@@ -3,7 +3,6 @@ from paraview.simple import *
 
 home_path = '/home/nebula/work/paraview'
 state_file_path = os.path.join(home_path, 'sb_simulation20170120.pvsm')
-
 screenshot_file_path = os.path.join(home_path, 'tmp2.png')
 servermanager.LoadState(state_file_path)
 
