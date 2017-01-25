@@ -7,27 +7,29 @@ def set_ospray(renderview):
     renderview.Shadows = 1
     renderview.AmbientSamples = 1
     renderview.SamplesPerPixel = 2
-    renderview.LightScale = 3.0
+    renderview.LightScale = 1.8
     renderview.EnableOSPRay = 1
 
 
 def make_animation(start=0, steps=10):
     home_path = '/home/nebula/work/paraview'
-    state_file_path = os.path.join(home_path, 'sb_simulation_rot_20170122.pvsm')
-    animation_dir_path = os.path.join('Movies', 'test_pvbatch_ospray_rot_4k_20170122')
+    state_file_path = os.path.join(home_path, 'standardbrain20170125.pvsm')
+    animation_dir_path = os.path.join(home_path, 'Movies', 'standardbrain20170125')
+
+    if not os.path.isdir(animation_dir_path):
+        os.mkdir(animation_dir_path)
 
     servermanager.LoadState(state_file_path)
-    # paraview.simple._DisableFirstRenderCameraReset()
 
     SetActiveView(GetRenderView())
     renderView1 = GetActiveViewOrCreate('RenderView')
-    renderView1.ViewSize = [4000, 4000]
+    renderView1.ViewSize = [1000, 1000]
     set_ospray(renderView1)
     Render()
 
     animationScene1 = GetAnimationScene()
 
-    screenshot_file_path = os.path.join(home_path, animation_dir_path, 'frame.%04d.png')
+    screenshot_file_path = os.path.join(animation_dir_path, 'frame.%04d.png')
     for i in range(start, start + steps):
         print('Processing: ' + (screenshot_file_path % i))
         # animationScene1.StartTime = i
@@ -53,9 +55,11 @@ WriteAnimation("animationC_R.png")
 
 if __name__ == '__main__':
     start_time = 0
-    if len(sys.argv) == 2:
+    steps = 10
+    if len(sys.argv) >= 2:
         start_time = int(sys.argv[1])
+    if len(sys.argv) >= 3:
+        steps = int(sys.argv[2])
 
-    make_animation(start=start_time)
-
+    make_animation(start=start_time, steps=steps)
 

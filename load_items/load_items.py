@@ -4,7 +4,8 @@ from paraview.simple import *
 #### disable automatic camera reset on 'Show'
 paraview.simple._DisableFirstRenderCameraReset()
 
-filepos = '/home/nebula/work/paraview/standardbrain20170107/'
+# filepos = '/home/nebula/work/paraview/standardbrain20170107/'
+filepos = '/home/nebula/work/paraview/standardbrain_colored20170125/'
 
 filelist_small = [
     '0004_regist',
@@ -52,19 +53,25 @@ renderview = GetActiveViewOrCreate('RenderView')
 
 for filename in filelist:
     reader = LegacyVTKReader(FileNames=[filepos + filename + '.vtk'])
-    # fixvalLUT = GetColorTransferFunction('fixval')
     display = Show(reader, renderview)
-    # display.ColorArrayName = ['CELLS', 'fixval']
-    # display.LookupTable = fixvalLUT
-    ColorBy(display, None)
-    display.DiffuseColor = [0.0, 1.0, 0.0]
-    #display.LookupTable = MakeBlueToRedLT(0, 256)
+    # ColorBy(display, None)
+    RenameSource(filename, reader)
 
     renderview.ResetCamera()
     Render()
+    ColorBy(display, ('CELLS', 'type'))
+    display.RescaleTransferFunctionToDataRange(True, False)
 
     readers.append(reader)
     displays.append(display)
 
-
-
+#
+#
+#
+# legacyVTKReader4Display = GetDisplayProperties(legacyVTKReader4, view=renderView1)
+#
+# # set scalar coloring
+# ColorBy(legacyVTKReader4Display, ('CELLS', 'type'))
+#
+# # rescale color and/or opacity maps used to include current data range
+# legacyVTKReader4Display.RescaleTransferFunctionToDataRange(True, False)
