@@ -1,12 +1,17 @@
 #### import the simple module from the paraview
+import sys
 from paraview.simple import *
 #### disable automatic camera reset on 'Show'
 paraview.simple._DisableFirstRenderCameraReset()
 
-filename = '0005_regist'
+if not len(sys.argv) == 2:
+    print('direct SWC filename (without .swc)')
+    quit()
+
+filename = sys.argv[1]
 
 # create a new 'Legacy VTK Reader'
-a0004_registvtk = LegacyVTKReader(FileNames=['/home/nebula/work/paraview/standardbrain20170131/0005_regist.vtk'])
+a0004_registvtk = LegacyVTKReader(FileNames=['/home/nebula/work/paraview/standardbrain20170131/' + filename + '.vtk'])
 
 # get active view
 renderView1 = GetActiveViewOrCreate('RenderView')
@@ -138,4 +143,4 @@ generateSurfaceNormals1Display.RescaleTransferFunctionToDataRange(True, False)
 generateSurfaceNormals1Display.SetScalarBarVisibility(renderView1, True)
 
 # export view
-ExportView('/home/nebula/work/blender/x3d/standardbrain20170131/0005_regist.x3d', view=renderView1)
+ExportView('/home/nebula/work/blender/x3d/standardbrain20170131/' + filename + '.x3d', view=renderView1)
