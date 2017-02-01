@@ -31,5 +31,5 @@ filelist_all = [
 ]
 
 for neuron in filelist_all:
-    bpy.ops.import_scene.x3d(filepath='/home/nebula/work/blender/x3d/standardbrain20170131/' + neuron + '.x3d', filter_glob="*.x3d;*.wrl", axis_forward='Z', axis_up='Y')
-    bpy.ops.import_scene.x3d(filepath='/home/nebula/work/blender/x3d/standardbrain20170131/' + neuron + '_flip.x3d', filter_glob="*.x3d;*.wrl", axis_forward='Z', axis_up='Y')
+    bpy.ops.import_scene.x3d(filepath='/home/nebula/work/blender/x3d/standardbrain20170201/' + neuron + '.x3d', filter_glob="*.x3d;*.wrl", axis_forward='Z', axis_up='-Y')
+    bpy.ops.import_scene.x3d(filepath='/home/nebula/work/blender/x3d/standardbrain20170201/' + neuron + '_flip.x3d', filter_glob="*.x3d;*.wrl", axis_forward='Z', axis_up='-Y')
