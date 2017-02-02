@@ -50,7 +50,7 @@ filelist_simple = [
 save_filepath = argv[0]
 base_filepath = '/home/nebula/work/blender/base_scene20170201.blend'
 
-filelist = filelist_simple
+filelist = filelist_all
 
 print('Start importing!')
 bpy.ops.wm.open_mainfile(filepath=base_filepath)
