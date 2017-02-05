@@ -3,7 +3,7 @@
 BLENDER=~/bin/blender-2.78a-linux-glibc211-x86_64/blender
 BLENDER_OPT=--background
 
-IMPORT_PYTHON=~/git/paraview-scripts/blender/import_x3d_3.py
+IMPORT_PYTHON=~/git/paraview-scripts/blender/import_x3d.py
 EXPORT_FILENAME=~/work/blender/batch20170201.blend
 IMAGE_FILENAME=~/work/blender/render20170127/frame####.png
 

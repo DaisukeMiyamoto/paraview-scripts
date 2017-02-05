@@ -1,12 +1,12 @@
 from paraview.simple import *
 
 
-def export_x3d_colored(filename, color):
+def export_x3d_colored(input_filename, output_filename, color):
     #### disable automatic camera reset on 'Show'
     paraview.simple._DisableFirstRenderCameraReset()
 
     # create a new 'Legacy VTK Reader'
-    a0004_registvtk = LegacyVTKReader(FileNames=['/home/nebula/work/paraview/standardbrain20170131/' + filename + '.vtk'])
+    a0004_registvtk = LegacyVTKReader(FileNames=[input_filename])
 
     # get active view
     renderView1 = GetActiveViewOrCreate('RenderView')
@@ -109,4 +109,4 @@ def export_x3d_colored(filename, color):
     generateSurfaceNormals1Display.DiffuseColor = color[0:3]
 
     # export view
-    ExportView('/home/nebula/work/blender/x3d/standardbrain20170201/' + filename + '.x3d', view=renderView1)
+    ExportView(output_filename, view=renderView1)

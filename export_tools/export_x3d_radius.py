@@ -1,11 +1,11 @@
 from paraview.simple import *
 
-def export_x3d_radius(filename):
+def export_x3d_radius(input_filename, output_filename):
     #### disable automatic camera reset on 'Show'
     paraview.simple._DisableFirstRenderCameraReset()
 
     # create a new 'Legacy VTK Reader'
-    a0004_registvtk = LegacyVTKReader(FileNames=['/home/nebula/work/paraview/standardbrain20170131/' + filename + '.vtk'])
+    a0004_registvtk = LegacyVTKReader(FileNames=[input_filename])
 
     # get active view
     renderView1 = GetActiveViewOrCreate('RenderView')
@@ -137,4 +137,4 @@ def export_x3d_radius(filename):
     generateSurfaceNormals1Display.SetScalarBarVisibility(renderView1, True)
 
     # export view
-    ExportView('/home/nebula/work/blender/x3d/standardbrain20170131/' + filename + '.x3d', view=renderView1)
+    ExportView(output_filename, view=renderView1)

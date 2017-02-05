@@ -1,5 +1,9 @@
 #!/bin/bash -x
 
+BLENDER=~/bin/blender-2.78a-linux-glibc211-x86_64/blender
+BLENDER_OPT=--background
+
+IMPORT_PYTHON=~/git/paraview-scripts/blender/convert_x3d.py
 TARGET_LIST="\
 0004_regist \
 0005_regist \
@@ -57,12 +61,11 @@ TARGET_LIST="\
 090815_4_sn_reg_flip\
 "
 
-PVBATCH="/home/nebula/bin/ParaView-5.2.0-Qt4-OpenGL2-MPI-Linux-64bit/bin/pvbatch"
-PVBATCH_OPT="--use-offscreen-rendering --mpi"
-N_NEURONS=54
+TARGET_LIST="\
+0004_regist \
+0005_regist \
+"
 
-i=0
 for TARGET in ${TARGET_LIST}; do
-    ${PVBATCH} ${PVBATCH_OPT} ./export_x3d.py ${TARGET} ${i} ${N_NEURONS}
-    i=$((i + 1))
+    ${BLENDER} ${BLENDER_OPT} --python ${IMPORT_PYTHON} -- ${TARGET}
 done
