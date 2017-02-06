@@ -9,11 +9,20 @@ import math
 
 def apply_decimate(obj):
     print('Faces: %d' % len(obj.data.polygons))
-    mod = obj.modifiers.new(name='decimate', type='DECIMATE')
+
+    mod = obj.modifiers.new(name='decimate1', type='DECIMATE')
     mod.decimate_type = 'DISSOLVE'
-    mod.angle_limit = math.radians(10)
-    bpy.ops.object.modifier_apply(modifier='decimate')
+    mod.angle_limit = math.radians(15)
+    bpy.context.scene.objects.active = obj
+    bpy.ops.object.modifier_apply(modifier='decimate1', apply_as='DATA')
     print('Faces (DISSOLVE): %d' % len(obj.data.polygons))
+
+    mod = obj.modifiers.new(name='decimate2', type='DECIMATE')
+    mod.decimate_type = 'COLLAPSE'
+    mod.ratio = 0.4
+    bpy.context.scene.objects.active = obj
+    bpy.ops.object.modifier_apply(modifier='decimate2', apply_as='DATA')
+    print('Faces (COLLAPSE): %d' % len(obj.data.polygons))
 
 
 
@@ -41,20 +50,20 @@ bpy.ops.object.select_all(action='TOGGLE')
 
 ob = bpy.data.objects['Shape_IndexedFaceSet']
 
-bpy.context.scene.objects.active = ob
 ob.select = True
-ob.name = neuron
+#ob.name = neuron
 ob.scale = (0.01, 0.01, 0.01)
 ob.location = (-5.12, -1.6, 4.5)
 ob.rotation_euler[1] = math.radians(180)
-# apply_decimate(ob)
+apply_decimate(ob)
 
 # print('Polygons: %d' % len(ob.data.polygons))
 
 # bpy.ops.object.join()
+bpy.ops.wm.save_as_mainfile(filepath='/home/nebula/work/blender/x3d/standardbrain_decimate20170205/' + neuron + '.blend')
 
+# bpy.ops.export_scene.x3d(filepath='/home/nebula/work/blender/x3d/standardbrain_decimate20170205/' + neuron + '.x3d')
 bpy.ops.export_scene.x3d(filepath='/home/nebula/work/blender/x3d/standardbrain_decimate20170205/' + neuron + '.x3d',
                          use_mesh_modifiers=True, use_normals=True,
                          use_selection=True, name_decorations=True)
-
 print('Finished!')

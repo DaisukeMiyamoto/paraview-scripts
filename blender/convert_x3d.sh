@@ -61,10 +61,10 @@ TARGET_LIST="\
 090815_4_sn_reg_flip\
 "
 
-TARGET_LIST="\
-0004_regist \
-0005_regist \
-"
+#TARGET_LIST="\
+#0004_regist \
+#0005_regist \
+#"
 
 for TARGET in ${TARGET_LIST}; do
     ${BLENDER} ${BLENDER_OPT} --python ${IMPORT_PYTHON} -- ${TARGET}
